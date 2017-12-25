@@ -17,13 +17,24 @@ class BeginScene extends BaseScene {
             this.addElemet(g)
             this.grounds.push(g)
         }
+
+        // 无限滚动
+        this.skipCount = 5
     }
 
     update() {
         super.update()
+
+        var offset = -5
+        this.skipCount--
+        if (this.skipCount == 0) {
+            this.skipCount = 5
+            offset = 20
+        }
+
         for (var i = 0; i < 30; i++) {
             var g = this.grounds[i]
-            g.x += -5
+            g.x += offset
         }
     }
 }
