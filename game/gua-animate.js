@@ -1,34 +1,28 @@
 class GuaAnimate {
     constructor(game) {
         this.game = game
+        this.type = 'animation'
 
         // loads
         this.animations = {
             walk:[],
-            idle:[],
         }
         // hard code
-        for (var i = 1; i < 21; i++) {
-            var name = `w${i}`
+        for (var i = 1; i < 4; i++) {
+            var name = `b${i}`
             var f = game.textureByName(name)
             this.animations['walk'].push(f)
         }
 
-        for (var i = 1; i < 17; i++) {
-            var name = `s${i}`
-            var f = game.textureByName(name)
-            this.animations['idle'].push(f)
-        }
-
-        this.animationName = 'idle'
+        this.animationName = 'walk'
         this.texture = this.frames()[0]
         this.frameInterval = 3
         this.frameIndex = 0
 
-        this.w = this.texture.width * 0.1
-        this.h = this.texture.height * 0.1
-
         this.flipX = false
+
+        this.w = this.texture.width
+        this.h = this.texture.height
     }
 
     frames() {
@@ -68,15 +62,6 @@ class GuaAnimate {
     }
 
     move(state, x) {
-        this.flipX = x < 0
 
-        this.x += x
-
-        var animationNames = {
-            'down': 'walk',
-            'up': 'idle',
-        }
-        var name = animationNames[state]
-        this.changeAnimate(name)
     }
 }

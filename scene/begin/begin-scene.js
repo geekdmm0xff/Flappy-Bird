@@ -20,6 +20,12 @@ class BeginScene extends BaseScene {
 
         // 无限滚动
         this.skipCount = 5
+
+        // 小鸟
+        var animate = new GuaAnimate(game)
+        animate.x = 100
+        animate.y = 100
+        this.addElemet(animate)
     }
 
     update() {

@@ -15,6 +15,7 @@ class BaseScene {
         this.elemsMap = {
             'bg': [],
             'ground':[],
+            'animation':[],
         }
     }
 
