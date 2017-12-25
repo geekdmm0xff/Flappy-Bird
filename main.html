@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hit Plane</title>
+    <style>
+        #id-canvas {
+            border: 1px solid black;
+            width: 400px;
+            height: 400px;
+        }
+    </style>
+    <!-- Game 相关 -->
+    <script src="game/utils.js"></script>
+    <script src="game/gua-image.js"></script>
+    <script src="game/game.js"></script>
+    <script src="game/particle-system.js"></script>
+    <script src="game/gua-animate.js"></script>
+    <!-- Scene 相关 -->
+    <script src="scene/scene.js"></script>
+    <script src="scene/main/main-scene.js"></script>
+    <script src="scene/over/finish-scene.js"></script>
+    <script src="scene/begin/begin-scene.js"></script>
+    <!-- Main 相关 -->
+    <script src="main.js"></script>
+</head>
+<body>
+    <canvas id="id-canvas" width="400" height="400"></canvas>
+    <div>
+        <input class="auto-input" data-code="config.player_speed" type="range" value=10>
+        玩家速度:<span class="speed-span">10</span>
+    </div>
+
+    <div>
+        <input class="auto-input" data-code="config.bullet_speed" type="range" value=20>
+        子弹速度:<span class="speed-span">20</span>
+    </div>
+
+    <div>
+        <input class="auto-input" data-code="config.enemy_speed" type="range" value=2>
+        敌机速度:<span class="speed-span">2</span>
+    </div>
+
+    <div>
+        <input class="auto-input" data-code="config.cloud_speed" type="range" value=5 max=10 min=-10>
+        云朵速度:<span class="speed-span">2</span>
+    </div>
+
+    <div>
+        <input class="auto-input" data-code="config.cooldown_time" type="range" value=10 min=0 max=20 >
+        子弹冷却:<span class="speed-span">10</span>
+    </div>
+
+    <script>
+        __main()
+    </script>
+    <script>
+        var es = sel => document.querySelectorAll(sel)
+
+        var bindAll = function (sel, eventName, callback) {
+            var elems = es(sel)
+
+            for (var i = 0; i < elems.length; i++) {
+                var e = elems[i]
+                e.addEventListener(eventName, function (event) {
+                    callback(event)
+                })
+            }
+        }
+
+        bindAll('.auto-input', 'input', function (event) {
+            var input = event.target
+            var v = input.value
+            var code = input.dataset.code
+            eval(code + '=' + v)
+            //
+            var span = input.closest('div').querySelector('.speed-span')
+            span.innerHTML = v
+        })
+    </script>
+</body>
+</html>
