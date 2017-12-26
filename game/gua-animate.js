@@ -19,10 +19,20 @@ class GuaAnimate {
         this.frameInterval = 3
         this.frameIndex = 0
 
-        this.flipX = false
-
         this.w = this.texture.width
         this.h = this.texture.height
+
+        this.reset()
+
+        game.registerAction('j', () => {
+            this.reset()
+            this.y -= 10
+        })
+    }
+
+    reset() {
+        this.vy = 10
+        this.gy = 1
     }
 
     frames() {
@@ -30,6 +40,7 @@ class GuaAnimate {
     }
 
     update() {
+        // 动画
         this.frameInterval--
         if (this.frameInterval == 0) {
             var frames = this.frames()
@@ -37,31 +48,20 @@ class GuaAnimate {
             this.frameIndex = (this.frameIndex + 1) % frames.length
             this.texture = frames[this.frameIndex]
         }
-    }
 
-    draw() {
-        if (this.flipX) {
-            var ctx = this.game.context
-            ctx.save()
-
-            var x = this.x + this.w / 2
-            ctx.translate(x, 0)
-            ctx.scale(-1, 1)
-            ctx.translate(-x, 0)
-
-            ctx.drawImage(this.texture, this.x, this.y, this.w, this.h)
-
-            ctx.restore()
-        } else {
-            this.game.drawImage(this)
+        // 掉落
+        this.y += this.vy * 0.5
+        this.vy += this.gy * 0.5
+        if (this.y > 305) {
+            this.y = 305
+        }
+        if (this.y < 0) {
+            this.y = 0
         }
     }
 
-    changeAnimate(name) {
-        this.animationName = name
+    draw() {
+        this.game.drawImage(this)
     }
 
-    move(state, x) {
-
-    }
 }

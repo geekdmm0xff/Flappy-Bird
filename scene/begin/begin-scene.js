@@ -17,7 +17,6 @@ class BeginScene extends BaseScene {
             this.addElemet(g)
             this.grounds.push(g)
         }
-
         // 无限滚动
         this.skipCount = 5
 
