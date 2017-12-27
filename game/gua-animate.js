@@ -18,16 +18,27 @@ class GuaAnimate {
         this.texture = this.frames()[0]
         this.frameInterval = 3
         this.frameIndex = 0
+        this.rotation = 0
 
         this.w = this.texture.width
         this.h = this.texture.height
 
         this.reset()
 
-        game.registerAction('j', () => {
+        this.setupInputs()
+
+    }
+
+    setupInputs() {
+        this.game.registerAction('j', () => {
             this.reset()
-            this.y -= 10
+            this.jump()
         })
+    }
+
+    jump() {
+        this.y -= 10
+        this.rotation = -45
     }
 
     reset() {
@@ -49,19 +60,33 @@ class GuaAnimate {
             this.texture = frames[this.frameIndex]
         }
 
-        // 掉落
+        // 更新受力
         this.y += this.vy * 0.5
         this.vy += this.gy * 0.5
-        if (this.y > 305) {
-            this.y = 305
+        if (this.y > 418) {
+            this.y = 418
         }
-        if (this.y < 0) {
-            this.y = 0
+        // 更新角度
+        if (this.rotation < 45) {
+            this.rotation += 5
         }
     }
 
     draw() {
-        this.game.drawImage(this)
+        //this.game.drawImage(this)
+        var context = this.game.context
+        context.save()
+        var x = this.x + this.w / 2
+        var y = this.y + this.h / 2
+
+        context.translate(x, y)
+
+
+        context.rotate(this.rotation * Math.PI / 180)
+        context.translate(-x, -y)
+
+        context.drawImage(this.texture, this.x, this.y, this.w, this.h)
+        context.restore()
     }
 
 }

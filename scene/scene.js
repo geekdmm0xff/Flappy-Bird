@@ -16,6 +16,7 @@ class BaseScene {
             'bg': [],
             'ground':[],
             'animation':[],
+            'pipes': [],
         }
     }
 
