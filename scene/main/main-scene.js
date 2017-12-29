@@ -1,13 +1,3 @@
-
-//[start, end]
-var config = {
-    player_speed: 10,
-    bullet_speed: 20,
-    enemy_speed: 2,
-    cloud_speed: 1,
-    cooldown_time: 5,
-}
-
 const random = function (start, end) {
     var n = Math.random() * (end - start + 1) + start
     return Math.floor(n)

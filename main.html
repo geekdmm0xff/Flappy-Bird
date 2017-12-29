@@ -11,6 +11,7 @@
         }
     </style>
     <!-- Game 相关 -->
+    <script src="game/config.js"></script>
     <script src="game/utils.js"></script>
     <script src="game/gua-image.js"></script>
     <script src="game/game.js"></script>
@@ -26,36 +27,40 @@
 </head>
 <body>
     <canvas id="id-canvas" width="500" height="500"></canvas>
-    <div>
-        <input class="auto-input" data-code="config.player_speed" type="range" value=10>
-        玩家速度:<span class="speed-span">10</span>
-    </div>
+    <div class="game-container">
 
-    <div>
-        <input class="auto-input" data-code="config.bullet_speed" type="range" value=20>
-        子弹速度:<span class="speed-span">20</span>
     </div>
+    <!--<div>-->
+        <!--<input class="auto-input" data-code="config.player_speed" type="range" value=10>-->
+        <!--玩家速度:<span class="speed-span">10</span>-->
+    <!--</div>-->
 
-    <div>
-        <input class="auto-input" data-code="config.enemy_speed" type="range" value=2>
-        敌机速度:<span class="speed-span">2</span>
-    </div>
+    <!--<div>-->
+        <!--<input class="auto-input" data-code="config.bullet_speed" type="range" value=20>-->
+        <!--子弹速度:<span class="speed-span">20</span>-->
+    <!--</div>-->
 
-    <div>
-        <input class="auto-input" data-code="config.cloud_speed" type="range" value=5 max=10 min=-10>
-        云朵速度:<span class="speed-span">2</span>
-    </div>
+    <!--<div>-->
+        <!--<input class="auto-input" data-code="config.enemy_speed" type="range" value=2>-->
+        <!--敌机速度:<span class="speed-span">2</span>-->
+    <!--</div>-->
 
-    <div>
-        <input class="auto-input" data-code="config.cooldown_time" type="range" value=10 min=0 max=20 >
-        子弹冷却:<span class="speed-span">10</span>
-    </div>
+    <!--<div>-->
+        <!--<input class="auto-input" data-code="config.cloud_speed" type="range" value=5 max=10 min=-10>-->
+        <!--云朵速度:<span class="speed-span">2</span>-->
+    <!--</div>-->
+
+    <!--<div>-->
+        <!--<input class="auto-input" data-code="config.cooldown_time" type="range" value=10 min=0 max=20 >-->
+        <!--子弹冷却:<span class="speed-span">10</span>-->
+    <!--</div>-->
 
     <script>
         __main()
     </script>
     <script>
         var es = sel => document.querySelectorAll(sel)
+        var e = sel => document.querySelector(sel)
 
         var bindAll = function (sel, eventName, callback) {
             var elems = es(sel)
@@ -68,15 +73,49 @@
             }
         }
 
-        bindAll('.auto-input', 'input', function (event) {
-            var input = event.target
-            var v = input.value
-            var code = input.dataset.code
-            eval(code + '=' + v)
-            //
-            var span = input.closest('div').querySelector('.speed-span')
-            span.innerHTML = v
-        })
+        var bindEvents = function () {
+            bindAll('.auto-input', 'input', function (event) {
+                var input = event.target
+                var v = input.value
+                var code = input.dataset.code + '.' + 'value'
+                eval(code + '=' + v)
+                var span = input.closest('div').querySelector('.speed-span')
+                span.innerHTML = v
+            })
+        }
+
+        var insertHTML = function (elem, html) {
+            elem.insertAdjacentHTML('beforeend', html)
+        }
+
+        var cellTemplate = function (key, elem) {
+            var comment = elem.comment
+            var value = elem.value
+            var t = `
+                     <div>
+                     <input class="auto-input" data-code="config.${key}" type="range" value=${value}>
+                     ${comment}<span class="speed-span">${value}</span>
+                     </div>
+                    `
+            return t
+        }
+
+        var buildUI = function () {
+            var div = e('.game-container')
+            var keys = Object.keys(config)
+            for (var key of keys) {
+                var elem = config[key]
+                var t = cellTemplate(key, elem)
+                insertHTML(div, t)
+            }
+        }
+
+        var __main = function () {
+            buildUI()
+            bindEvents()
+        }
+
+        __main()
     </script>
 </body>
 </html>
