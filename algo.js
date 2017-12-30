@@ -78,7 +78,6 @@ var primeNumbers = function() {
 }
 
 
-
 // 题 3
 // 给定一个只包含字母的字符串，返回单个字母出现的次数
 // 考察字典的概念和使用
@@ -91,16 +90,42 @@ var primeNumbers = function() {
 //     'l': 2,
 //     'o': 1,
 // }
-const letterCount = function(str) {
-
+var letterCount = function(str) {
+	var map = {}
+	for (var i = 0; i < str.length; i++) {
+		var c = str.charCodeAt(i)
+		if (isAlphabet(c)) {
+			var s = str.charAt(i)
+			var v = map[s]
+			if (v == undefined) {
+				map[s] = 1
+			} else {
+				map[s] = ++v
+			}
+		}
+	}
+	return map
 }
-
 
 
 // 题 4
 // 给定一个英文句子（一个只有字母的字符串），将句中所有单词变为有且只有首字母大写的形式
-const capString = function(str) {
-
+var capString = function(str) {
+	// 'asdasd asd ad  ad asda'
+	var arr = str.split(' ')
+	var result = ''
+	for (var sub of arr) {
+		for (var i = 0; i < sub.length; i++) {
+			var s = sub.charAt(i)
+			if (i == 0) {
+				result += s.toUpperCase()
+			} else {
+				result += s
+			}
+		}
+		result += ' '
+	}
+	return result
 }
 
 
@@ -108,7 +133,19 @@ const capString = function(str) {
 // 题 5
 // 写一个 Queue 类，它有两个方法，用法如下
 
-const q = new Queue()
+class Queue{
+	constructor() {
+		this.list = []
+	}
+	enqueue(e) {
+		this.list.push(e)
+	}
+	dequeue() {
+		return this.list.shift()
+	}
+}
+
+var q = new Queue()
 q.enqueue(1)
 q.enqueue(2)
 q.enqueue(3)
@@ -124,3 +161,19 @@ console.log(q.dequeue()) // 3
 // 参考链接：https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest
 // url 为 https://www.xul.fr/ajax/ajax-get.txt
 // method 为 GET
+
+var sendRequest = function () {
+	var r = new XMLHttpRequest()
+	var url = 'https://www.xul.fr/ajax/ajax-get.txt'
+
+	r.open('GET', url, true)
+	r.setRequestHeader('Content-Type', 'text/plain')
+	r.onreadystatechange = function () {
+		if (r.readyState === 4) {
+			console.log(r.response)
+		}
+	}
+	r.send()
+}
+
+sendRequest()
