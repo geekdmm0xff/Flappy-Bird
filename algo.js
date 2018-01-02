@@ -177,3 +177,63 @@ var sendRequest = function () {
 }
 
 sendRequest()
+
+// 题 7 链表
+class Node {
+	constructor(e) {
+		this.elemt = e
+		this.next = null
+	}
+}
+
+class LinkedList {
+	constructor() {
+		this.head = new Node()
+		this._length = 0
+	}
+	// 末尾增加一个元素
+	append(e) {
+		var n = new Node(e)
+		var tmp = this.head
+		while (tmp.next != null) {
+			tmp = tmp.next
+		}
+		tmp.next = n
+
+		this._length += 1
+	}
+
+	indexOf(e) {
+		var index = -1
+		var tmp = this.head
+		var i = 0
+		while (tmp.next != null) {
+			if (tmp.elemt === e) {
+				index = i
+				break
+			}
+			tmp = tmp.next
+			i++
+		}
+		return index
+	}
+
+	length() {
+		return this._length
+	}
+
+	log() {
+		var tmp = this.head.next
+		while (tmp != null) {
+			console.log(tmp.elemt, '=>')
+			tmp = tmp.next
+		}
+	}
+}
+var list = new LinkedList()
+list.append('hello')
+list.append('gua')
+list.append('你好')
+list.log()
+console.log(list.indexOf('gua'))
+console.log(list.length())
